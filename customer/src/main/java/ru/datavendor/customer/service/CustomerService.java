@@ -1,9 +1,16 @@
 package ru.datavendor.customer.service;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.datavendor.customer.model.Customer;
 import ru.datavendor.customer.model.CustomerRegistrationRequest;
+import ru.datavendor.customer.repository.CustomerRepository;
 
-public record CustomerService() {
+@Service
+@AllArgsConstructor
+public class CustomerService {
+
+    private final CustomerRepository repository;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -11,6 +18,6 @@ public record CustomerService() {
                 .lastName(request.lastName())
                 .email(request.email())
                 .build();
-
+        repository.save(customer);
     }
 }
